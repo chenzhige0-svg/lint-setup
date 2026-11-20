@@ -160,6 +160,15 @@ else
 	warn "未找到 npm，跳过前端工具；安装 Node 22 后重跑本脚本"
 fi
 
+# ESLint 配置在项目找不到本地依赖时会回退到 $TOOLBOX/node_modules
+if command -v npm >/dev/null 2>&1; then
+	NPM_GLOBAL_ROOT=$(npm root -g 2>/dev/null || true)
+	if [ -n "$NPM_GLOBAL_ROOT" ] && [ -d "$NPM_GLOBAL_ROOT" ]; then
+		mkdir -p "$TOOLBOX"
+		ln -sfn "$NPM_GLOBAL_ROOT" "$TOOLBOX/node_modules"
+	fi
+fi
+
 # ---------------------------------------------------------------- 二进制
 install_bin() {
 	local url=$1 dest=$2
