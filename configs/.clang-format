@@ -1,0 +1,14 @@
+---
+# clang-format —— C / C++ / Objective-C
+# 采用 Google 基础风格 + 2 空格缩进 + 100 列，便于和 ROS/ament 项目共存
+# 用法：clang-format -i --style=file main.c
+Language: Cpp
+BasedOnStyle: Google
+ColumnLimit: 100
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+DerivePointerAlignment: false
+PointerAlignment: Left
+AllowShortFunctionsOnASingleLine: Empty
+SortIncludes: CaseSensitive

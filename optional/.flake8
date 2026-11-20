@@ -1,0 +1,16 @@
+# flake8 —— Ruff 的替代方案（传统 pycodestyle + pyflakes 组合）
+# 用法：flake8 --config ~/.config/dev-toolbox/.flake8 .
+[flake8]
+max-line-length = 100
+extend-ignore = E203, E501, W503
+exclude =
+    .git,
+    .venv,
+    venv,
+    __pycache__,
+    build,
+    dist,
+    node_modules
+per-file-ignores =
+    __init__.py:F401
+    tests/*:S101

@@ -1,0 +1,22 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 本地覆盖
+.env
+.env.*
+!.env.example
+*.local

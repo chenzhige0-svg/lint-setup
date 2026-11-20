@@ -1,0 +1,8 @@
+---
+# clangd 使用 build/ 下的 compile_commands.json，并把 clang-tidy 作为诊断来源
+CompileFlags:
+  CompilationDatabase: build
+Diagnostics:
+  ClangTidy:
+    Add: [bugprone-*, performance-*, modernize-*]
+    Remove: [modernize-use-trailing-return-type]

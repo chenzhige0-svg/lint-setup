@@ -1,0 +1,22 @@
+# gitleaks —— 密钥泄漏扫描
+# 用法：gitleaks detect --source . --config ~/.config/dev-toolbox/.gitleaks.toml
+# staged 模式：gitleaks protect --staged --config ~/.config/dev-toolbox/.gitleaks.toml
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "测试夹具与示例中的假密钥"
+paths = [
+  '''(^|/)tests?/fixtures/''',
+  '''(^|/)testdata/''',
+  '''(^|/)examples?/.*\.(example|sample)''',
+]
+
+[[allowlists]]
+description = "锁文件与第三方产物"
+paths = [
+  '''(^|/)package-lock\.json$''',
+  '''(^|/)pnpm-lock\.yaml$''',
+  '''(^|/)uv\.lock$''',
+  '''(^|/)poetry\.lock$''',
+]

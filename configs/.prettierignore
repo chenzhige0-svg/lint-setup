@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+install/
+log/
+coverage/
+.venv/
+venv/
+__pycache__/
+*.min.js
+*.min.css
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+uv.lock
+poetry.lock
+.git/

@@ -1,0 +1,38 @@
+# Ruff —— Python lint + format（替代 flake8 + isort + 大部分 pylint）
+# 用法：ruff check . / ruff format .
+
+target-version = "py312"
+line-length = 100
+
+[lint]
+select = [
+  "E4", "E7", "E9", # pycodestyle 错误
+  "F",              # pyflakes
+  "B",              # flake8-bugbear
+  "I",              # isort
+  "UP",             # pyupgrade
+  "SIM",            # flake8-simplify
+  "S",              # flake8-bandit（安全）
+  "RUF",            # Ruff 专有规则
+]
+ignore = [
+  "E501", # 行长交给 formatter
+  "S101", # 允许 assert（pytest 必需）
+  "B008", # FastAPI 的 Depends()/Query() 默认值写法
+]
+
+[lint.isort]
+known-first-party = ["src"]
+
+[lint.mccabe]
+max-complexity = 15
+
+[lint.per-file-ignores]
+"tests/**" = ["S101"]
+"__init__.py" = ["F401"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+docstring-code-format = true

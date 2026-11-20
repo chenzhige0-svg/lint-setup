@@ -1,0 +1,16 @@
+charliermarsh.ruff
+ms-python.python
+ms-pyright.pyright
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+timonwong.shellcheck
+foxundermoon.shell-format
+llvm-vs-code-extensions.vscode-clangd
+xaver.clang-format
+stylelint.vscode-stylelint
+DavidAnson.vscode-markdownlint
+redhat.vscode-yaml
+exiasr.hadolint
+EditorConfig.EditorConfig
+golang.go
+rust-lang.rust-analyzer

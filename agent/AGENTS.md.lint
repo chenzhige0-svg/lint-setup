@@ -1,0 +1,14 @@
+## Lint / format protocol
+
+- 改完 Python：`ruff check --fix <files>`，然后 `ruff format <files>`
+- Python 类型检查：`pyright`（不要再用 mypy，遗留项目除外）
+- 改完 Shell：`shellcheck <files>`；需要格式化时 `shfmt -w -i 2 -ci -sr <files>`
+- 改完 JS/TS：优先 `npx --no-install eslint --fix <files>`（项目无本地依赖时用 `eslint --fix`），再 `prettier --write <files>`
+- 改完 CSS/Markdown/YAML/JSON：`prettier --write <files>`
+- 改完 C/C++：`clang-format -i <files>`；提交前再跑 `clang-tidy -p build <files>`
+- 改完 Go：`gofmt -w <files>`；提交前 `golangci-lint run ./...`
+- 改完 Rust：`rustfmt <files>`；提交前 `cargo clippy --all-targets -- -D warnings`
+- 提交前：`pre-commit run`（只查暂存区）
+- 大检查：`pre-commit run --all-files --hook-stage pre-push`
+- 禁止 `git commit --no-verify`，除非用户明确要求
+- 只格式化本次改动的文件，不要顺手重排无关代码

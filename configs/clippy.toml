@@ -1,0 +1,4 @@
+# clippy —— Rust lint 配置
+# 常规检查：cargo clippy --all-targets --all-features -- -D warnings
+# 严格检查：cargo clippy -- -W clippy::pedantic
+avoid-breaking-exported-api = false

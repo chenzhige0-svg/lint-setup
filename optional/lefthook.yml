@@ -1,0 +1,98 @@
+# lefthook —— 高性能 Git hooks（Go 编写，并行执行）
+# 安装：lefthook install
+# 手动运行：lefthook run pre-commit
+# 说明：直接调用本机全局工具；{staged_files} 只处理暂存文件。
+pre-commit:
+  parallel: true
+  jobs:
+    - name: gitleaks
+      run: gitleaks git --pre-commit --staged --redact --no-banner
+      stage_fixed: false
+
+    - name: ruff-check
+      glob: "*.{py,pyi}"
+      run: ruff check --force-exclude --fix {staged_files}
+      stage_fixed: true
+
+    - name: ruff-format
+      glob: "*.{py,pyi}"
+      run: ruff format --force-exclude {staged_files}
+      stage_fixed: true
+
+    - name: mypy
+      glob: "*.{py,pyi}"
+      run: mypy {staged_files}
+
+    - name: pyright
+      glob: "*.{py,pyi}"
+      run: pyright
+
+    - name: bandit
+      glob: "*.{py,pyi}"
+      run: bandit -q {staged_files}
+
+    - name: eslint
+      glob: "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}"
+      run: eslint --fix --no-warn-ignored {staged_files}
+      stage_fixed: true
+
+    - name: prettier
+      glob: "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx,json,jsonc,css,scss,md,mdx,yaml,yml,html}"
+      run: prettier --write --ignore-unknown {staged_files}
+      stage_fixed: true
+
+    - name: stylelint
+      glob: "*.{css,scss}"
+      run: stylelint --fix --allow-empty-input {staged_files}
+      stage_fixed: true
+
+    - name: markdownlint
+      glob: "*.{md,markdown}"
+      run: markdownlint-cli2 {staged_files}
+
+    - name: yamllint
+      glob: "*.{yaml,yml}"
+      run: yamllint {staged_files}
+
+    - name: hadolint
+      glob: "*Dockerfile*"
+      run: hadolint {staged_files}
+
+    - name: shellcheck
+      glob: "*.{sh,bash,zsh}"
+      run: shellcheck --external-sources {staged_files}
+
+    - name: shfmt
+      glob: "*.{sh,bash,zsh}"
+      run: shfmt -i 2 -ci -w {staged_files}
+      stage_fixed: true
+
+    - name: clang-format
+      glob: "*.{c,cc,cpp,cxx,h,hpp,hxx}"
+      run: clang-format -i {staged_files}
+      stage_fixed: true
+
+    - name: gofmt
+      glob: "*.go"
+      run: gofmt -w {staged_files}
+      stage_fixed: true
+
+    - name: golangci-lint
+      glob: "*.go"
+      run: golangci-lint run ./...
+
+    - name: rustfmt
+      glob: "*.rs"
+      run: rustfmt {staged_files}
+      stage_fixed: true
+
+# 推送前跑更重的检查（可选启用）
+# pre-push:
+#   parallel: true
+#   jobs:
+#     - name: clippy
+#       glob: "*.rs"
+#       run: cargo clippy --all-targets --all-features -- -D warnings
+#     - name: pytest
+#       glob: "*.py"
+#       run: pytest -q

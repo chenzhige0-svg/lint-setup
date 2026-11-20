@@ -1,0 +1,14 @@
+# hadolint —— Dockerfile
+# 用法：hadolint --config ~/.config/dev-toolbox/.hadolint.yaml Dockerfile
+failure-threshold: warning
+
+trustedRegistries:
+  - docker.io
+  - ghcr.io
+  - gcr.io
+  - quay.io
+  - mcr.microsoft.com
+
+ignored:
+  - DL3008 # apt 包版本钉死（按需保留）
+  - DL3059 # 连续 RUN 指令

@@ -1,0 +1,5 @@
+# ShellCheck —— sh / bash
+# 大多数脚本是 bash；zsh 脚本请在文件内用 `# shellcheck shell=bash` 或单独排除
+shell=bash
+external-sources=true
+source-path=SCRIPTDIR

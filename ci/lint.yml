@@ -1,0 +1,44 @@
+name: lint
+
+on: [push, pull_request]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 有 Go / Rust 项目时取消注释
+      # - uses: actions/setup-go@v5
+      #   with:
+      #     go-version: '1.24.x'
+      # - uses: dtolnay/rust-toolchain@stable
+      #   with:
+      #     components: rustfmt, clippy
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Install lint tools
+        run: ./.github/scripts/install-lint-tools.sh
+
+      - name: Commit-stage checks
+        run: pre-commit run --all-files --show-diff-on-failure
+
+      - name: Pre-push checks
+        run: pre-commit run --all-files --hook-stage pre-push --show-diff-on-failure
+
+      - name: Secret scan (full history)
+        run: gitleaks git --log-opts="--all" --redact --no-banner

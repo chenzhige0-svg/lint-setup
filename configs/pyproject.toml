@@ -1,0 +1,45 @@
+# Python 唯一事实源：把本文件的 [tool.*] 段落合并进项目根目录的 pyproject.toml
+# 覆盖 Ruff / Bandit / Pyright；mypy 仅遗留项目按需启用。
+# 注意：不要再同时放置 ruff.toml、.flake8、pyrightconfig.json，否则 Ruff/Pyright 会优先读旧文件。
+
+[tool.ruff]
+line-length = 99 # 对齐 ROS ament_flake8
+target-version = "py312"
+extend-exclude = ["build", "install", "log"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"] # 行宽交给 formatter
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/**" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.bandit]
+exclude_dirs = ["tests", "build", "install", "log"]
+
+[tool.pyright]
+include = ["."]
+exclude = [
+  "**/node_modules",
+  "**/__pycache__",
+  "**/.venv",
+  "**/venv",
+  "**/build",
+  "**/install",
+  "**/log",
+]
+pythonVersion = "3.12"
+typeCheckingMode = "standard"
+reportMissingImports = "warning"
+reportMissingTypeStubs = "none"
+
+# 遗留项目如果坚持用 mypy，取消下面注释并删除 pyright 相关 hook：
+# [tool.mypy]
+# python_version = "3.12"
+# ignore_missing_imports = true
+# warn_unused_ignores = true
+# exclude = ["build", "install", "log"]

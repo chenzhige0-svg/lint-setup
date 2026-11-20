@@ -1,0 +1,24 @@
+# markdownlint-cli2 —— Markdown 结构检查
+# 格式化交给 Prettier，MD013 放宽到 120，避免两边互相打架
+# 用法：markdownlint-cli2 --config ~/.config/dev-toolbox/.markdownlint-cli2.yaml "**/*.md"
+config:
+  default: true
+  MD013:
+    line_length: 120
+    tables: false
+    code_blocks: false
+  MD033: false
+  MD041: false
+  MD024:
+    siblings_only: true
+
+globs:
+  - "**/*.md"
+  - "**/*.markdown"
+
+ignores:
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/.venv/**"
+  - "**/CHANGELOG.md"
